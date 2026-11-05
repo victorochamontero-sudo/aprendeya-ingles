@@ -6,7 +6,7 @@
   /* Diseño: columna única centrada, cabecera con navegación por nivel; cada nivel tiene su color */
   --bg:#F4F6FA; --surface:#FFFFFF; --ink:#0F1B2E; --ink2:#4E5C75; --line:#D9E0EA; --soft:#EAF0F8;
   --brand:#2457D6; --on:#FFFFFF; --good:#13795B; --goodbg:#E3F4EC; --bad:#B3321F; --badbg:#FBEAE6;
-  --b:#13795B; --i:#2457D6; --a:#8A2F9C;
+  --b:#13795B; --i:#2457D6; --a:#8A2F9C; --e:#B45309; --f:#C2185B;
   --f-display:"Bricolage Grotesque","Segoe UI",system-ui,sans-serif;
   --f-body:"Figtree","Segoe UI",system-ui,sans-serif;
   --f-mono:"IBM Plex Mono",ui-monospace,Menlo,Consolas,monospace;
@@ -14,15 +14,15 @@
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
   --bg:#0C1422; --surface:#142033; --ink:#E7EDF7; --ink2:#9DAAC2; --line:#26364F; --soft:#1A2A42;
   --brand:#7FA2FF; --on:#0C1422; --good:#4CC9A0; --goodbg:#10302A; --bad:#FF9A86; --badbg:#3A1B17;
-  --b:#4CC9A0; --i:#7FA2FF; --a:#D79BE8; color-scheme:dark}}
+  --b:#4CC9A0; --i:#7FA2FF; --a:#D79BE8; --e:#F0A15C; --f:#F27DA8; color-scheme:dark}}
 :root[data-theme="dark"]{
   --bg:#0C1422; --surface:#142033; --ink:#E7EDF7; --ink2:#9DAAC2; --line:#26364F; --soft:#1A2A42;
   --brand:#7FA2FF; --on:#0C1422; --good:#4CC9A0; --goodbg:#10302A; --bad:#FF9A86; --badbg:#3A1B17;
-  --b:#4CC9A0; --i:#7FA2FF; --a:#D79BE8; color-scheme:dark}
+  --b:#4CC9A0; --i:#7FA2FF; --a:#D79BE8; --e:#F0A15C; --f:#F27DA8; color-scheme:dark}
 *{box-sizing:border-box}
 body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.6 var(--f-body);padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
 .wrap{max-width:1040px;margin:0 auto;padding-block:16px 56px}
-[data-lv="b"]{--lv:var(--b)} [data-lv="i"]{--lv:var(--i)} [data-lv="a"]{--lv:var(--a)}
+[data-lv="b"]{--lv:var(--b)} [data-lv="i"]{--lv:var(--i)} [data-lv="a"]{--lv:var(--a)} [data-lv="e"]{--lv:var(--e)} [data-lv="f"]{--lv:var(--f)}
 h1,h2,h3{font-family:var(--f-display);line-height:1.15;margin:0;text-wrap:balance}
 h1{font-size:clamp(28px,5vw,44px);letter-spacing:-.02em}
 h2{font-size:clamp(20px,3vw,26px)}
@@ -70,7 +70,9 @@ nav#nav a[aria-current="page"]{background:var(--ink);color:var(--bg)}
 .heroside .big{font:700 24px/1.25 var(--f-display)}
 .heroside .es{color:var(--bg);opacity:.85}
 .heroside .say{background:transparent;color:var(--bg);border-color:currentColor;justify-self:start}
-.levels{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px}
+.levels{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:16px}
+.levels .lvcard{grid-column:span 2}.levels .lvcard:nth-child(n+4){grid-column:span 3}
+@media (max-width:900px){.levels .lvcard,.levels .lvcard:nth-child(n+4){grid-column:span 6}}
 .lvcard{background:var(--surface);border:1px solid var(--line);border-top:6px solid var(--lv);border-radius:12px;padding:20px;display:grid;gap:10px;align-content:start}
 .lvcard .btn{justify-self:start;margin-top:6px}
 .how{margin-top:40px;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:24px;display:grid;gap:12px}
@@ -524,6 +526,224 @@ ex:[
 ["order","Además, los resultados fueron consistentes.","Moreover, the results were consistent.|Furthermore, the results were consistent.","Moreover / furthermore = además."]
 ]}
 );
+UNITS.push(
+{id:"e1",lv:"experto1",t:"Inversión y énfasis",sum:"Dar fuerza a lo que dices con inversión, oraciones hendidas y estructuras de énfasis.",
+lesson:[
+{h:"Inversión tras adverbios negativos",p:"En inglés formal o literario, cuando una frase empieza con un adverbio negativo o restrictivo, el auxiliar va <b>antes</b> del sujeto: <b>Never have I</b> seen… <b>Rarely does he</b>… También con <b>seldom, little, not until, under no circumstances, on no account</b>. Si no hay auxiliar, se agrega do / does / did.",ex:[["Never have I seen such a beautiful view.","Nunca había visto una vista tan hermosa."],["Rarely does she complain about work.","Rara vez se queja del trabajo."],["Under no circumstances should you open this door.","Bajo ninguna circunstancia debes abrir esta puerta."]]},
+{h:"Not only, hardly… when, no sooner… than",p:"<b>Not only</b> invierte: <i>Not only did he lose his job, but he also lost his home.</i> <b>Hardly / scarcely … when</b> y <b>no sooner … than</b> expresan dos acciones casi simultáneas; el primer verbo va en pasado perfecto con inversión: <i>No sooner had we arrived than it began to rain.</i> <b>Only when / only after / only then</b> también invierten.",ex:[["Not only did she win, but she also broke the record.","No solo ganó, sino que además batió el récord."],["No sooner had I sat down than the phone rang.","Apenas me había sentado cuando sonó el teléfono."],["Only after the meeting did I realize my mistake.","Solo después de la reunión me di cuenta de mi error."]]},
+{h:"Oraciones hendidas (cleft sentences)",p:"Sirven para destacar una parte de la frase. <b>It is / was … that</b>: <i>It was Maria who called.</i> <b>What … is / was</b>: <i>What I need is a holiday.</i> También <b>All I want is…</b> y <b>The reason why … is that…</b>. En el habla, el énfasis se refuerza con la entonación.",ex:[["It was the noise that woke me up.","Fue el ruido lo que me despertó."],["What I need is a long holiday.","Lo que necesito son unas largas vacaciones."],["All I want is some peace and quiet.","Todo lo que quiero es un poco de paz y tranquilidad."]]}
+],
+vocab:[["not only","no solo"],["hardly","apenas"],["scarcely","casi no"],["seldom","rara vez"],["no sooner","apenas (… cuando)"],["on no account","de ningún modo"],["emphasis","énfasis"],["cleft sentence","oración hendida"],["fronting","anteposición"],["literary","literario"]],
+ex:[
+["mc","Never ___ such a beautiful sunset.",["I have seen","have I seen","I saw","did I seen"],1,"Después de «Never» al inicio se invierte: have + sujeto + participio."],
+["mc","Not only ___ late, but he also forgot the documents.",["he arrived","did he arrive","he did arrive","arrived he"],1,"Not only + auxiliar + sujeto + verbo base."],
+["mc","No sooner ___ than it started to rain.",["we had left","had we left","we left","did we leave"],1,"No sooner + had + sujeto + participio."],
+["fill","Hardly ___ I entered the room when the lights went out. (auxiliar)","had","Hardly + had + sujeto + participio + when."],
+["fill","Rarely ___ she speak in public. (auxiliar)","does","Con rarely al inicio, se inserta does y el verbo queda en base."],
+["order","Solo entonces entendí el problema.","Only then did I understand the problem.","Only then + did + sujeto + verbo base."],
+["mc","Which sentence puts the emphasis on the noise?",["The noise woke me up.","It was the noise that woke me up.","I was woken by noise.","Noise woke me."],1,"Oración hendida: It was … that …"],
+["order","Lo que necesito es descansar.","What I need is to rest.|What I need is rest.","Oración hendida con What … is."]
+]},
+
+{id:"e2",lv:"experto1",t:"Deseos, preferencias y subjuntivo",sum:"Expresar deseos, lamentos y recomendaciones formales con wish, would rather y el subjuntivo.",
+lesson:[
+{h:"Wish e If only",p:"<b>I wish + pasado simple</b> expresa un deseo sobre el presente (<i>I wish I had more time</i>). <b>I wish + pasado perfecto</b> es un lamento del pasado (<i>I wish I had studied</i>). <b>I wish + would</b> es una queja sobre algo que otro hace (<i>I wish he would stop</i>). <b>If only</b> es más enfático. Con to be se admite <b>were</b> para todas las personas.",ex:[["I wish I had more free time.","Ojalá tuviera más tiempo libre."],["If only I had listened to her advice.","Ojalá hubiera escuchado su consejo."],["I wish my neighbours would be quieter.","Ojalá mis vecinos fueran más silenciosos."]]},
+{h:"Would rather e It's time",p:"<b>Would rather + verbo base</b> expresa una preferencia propia (<i>I'd rather stay home</i>). Si el sujeto cambia: <b>would rather + sujeto + pasado</b> (<i>I'd rather you stayed</i>). <b>It's (high) time + sujeto + pasado</b> = ya es hora de (<i>It's time we left</i>). El pasado aquí es hipotético, no real.",ex:[["I'd rather walk than take the bus.","Prefiero caminar a tomar el bus."],["I'd rather you didn't smoke here.","Preferiría que no fumaras aquí."],["It's high time we made a decision.","Ya es hora de que tomemos una decisión."]]},
+{h:"Subjuntivo formal y as if",p:"Con verbos de petición, recomendación o exigencia (<b>suggest, recommend, demand, insist, propose, require</b>) se usa <b>that + sujeto + verbo base</b>: <i>I suggest that he see a doctor.</i> También con <i>It is essential / vital / important that she be present.</i> En inglés británico es común usar <i>should</i>. <b>As if / as though</b> + pasado indica algo irreal: <i>He talks as if he knew everything.</i>",ex:[["The manager insisted that every employee attend.","El gerente insistió en que todos los empleados asistieran."],["It is vital that she be informed.","Es vital que se le informe."],["He behaves as though he owned the place.","Se comporta como si fuera el dueño del lugar."]]}
+],
+vocab:[["wish","desear / ojalá"],["regret","lamentar"],["suggest","sugerir"],["insist","insistir"],["demand","exigir"],["require","requerir"],["essential","esencial"],["as if","como si"],["preference","preferencia"],["hypothetical","hipotético"]],
+ex:[
+["mc","I wish I ___ more time. (ahora no tengo)",["have","had","would have","having"],1,"Deseo sobre el presente: wish + pasado simple."],
+["mc","I wish I ___ harder at school. (lamento del pasado)",["studied","had studied","would study","study"],1,"Lamento del pasado: wish + pasado perfecto."],
+["mc","I'd rather you ___ here. (smoke)",["don't smoke","didn't smoke","won't smoke","not smoke"],1,"Would rather + sujeto distinto + pasado simple."],
+["fill","It's time we ___ home. (go)","went","It's time + sujeto + pasado simple."],
+["mc","The doctor recommended that he ___ more rest.",["gets","get","got","getting"],1,"Subjuntivo formal: that + sujeto + verbo base."],
+["fill","He talks as if he ___ everything. (know)","knew","As if + pasado para algo irreal."],
+["order","Ojalá fuera más alto.","I wish I were taller.|I wish I was taller.","Wish + were / was para deseos sobre el presente."],
+["mc","I wish my neighbours ___ making so much noise.",["stop","would stop","stopped","had stopped"],1,"Queja sobre un hábito ajeno: wish + would."]
+]},
+
+{id:"e3",lv:"experto1",t:"Modales de pasado y hábitos",sum:"Deducir, criticar y arrepentirse con should have, must have, needn't have y used to.",
+lesson:[
+{h:"Modales de pasado: deducción",p:"<b>Must have + participio</b>: estoy seguro de que pasó (<i>He must have forgotten</i>). <b>Can't / couldn't have</b>: estoy seguro de que no pasó. <b>May / might / could have</b>: posibilidad. El modal indica el grado de seguridad; el participio, la acción pasada.",ex:[["He must have forgotten our meeting.","Seguro que olvidó nuestra reunión."],["She can't have missed the bus. She's always early.","No puede haber perdido el bus. Siempre llega temprano."],["They might have taken the wrong road.","Puede que hayan tomado el camino equivocado."]]},
+{h:"Críticas y arrepentimientos",p:"<b>Should have / ought to have</b> + participio = debería haber (y no lo hice). <b>Shouldn't have</b> = no debería haberlo hecho. <b>Needn't have</b> + participio = no hacía falta, pero lo hice. No es lo mismo que <b>didn't need to</b>, que dice que no era necesario (y quizás no se hizo).",ex:[["I should have called you earlier.","Debí llamarte antes."],["You needn't have brought a gift.","No hacía falta que trajeras un regalo."],["We shouldn't have stayed so late.","No deberíamos habernos quedado tan tarde."]]},
+{h:"Used to, would y be used to",p:"<b>Used to</b> = hábito o estado pasado (<i>I used to live in Lima</i>). <b>Would</b> solo sirve para hábitos repetidos, no para estados (<i>We would play every day</i>). <b>Be / get used to + -ing</b> = estar / acostumbrarse a (<i>I'm used to getting up early</i>). <b>Be to</b> se usa para planes oficiales: <i>The president is to visit Chile.</i>",ex:[["I used to live in a small village.","Yo vivía en un pueblo pequeño."],["We would visit our grandparents every summer.","Visitábamos a nuestros abuelos cada verano."],["I'm not used to driving on the left.","No estoy acostumbrado a manejar por la izquierda."]]}
+],
+vocab:[["deduction","deducción"],["criticism","crítica"],["regret","arrepentimiento"],["certain","seguro"],["presumably","presumiblemente"],["apparently","aparentemente"],["used to","solía"],["accustomed to","acostumbrado a"],["oblige","obligar"],["custom","costumbre"]],
+ex:[
+["mc","He didn't answer the phone. He ___ asleep.",["must be","must have been","should have been","can't have been"],1,"Deducción segura sobre el pasado: must have been."],
+["mc","She ___ the train. She's always punctual.",["can't have missed","must have missed","should miss","might miss"],0,"Seguridad de que no ocurrió: can't have + participio."],
+["mc","You ___ so much food. Nobody is hungry.",["shouldn't buy","needn't have bought","mustn't have bought","don't need to buy"],1,"Needn't have + participio: no hacía falta, pero se hizo."],
+["fill","I ___ have told you earlier. (debí hacerlo; dos opciones válidas)","should|ought to","Should have / ought to have + participio."],
+["fill","I'm not ___ to getting up early. (acostumbrado)","used","Be used to + -ing."],
+["mc","When I was a child, we ___ in a small village.",["would live","used to live","were used to live","use to live"],1,"Un estado pasado solo admite used to, no would."],
+["order","Él podría haber ganado.","He could have won.","Could have + participio."],
+["mc","Which sentence means «no hacía falta, pero lo hice»?",["I didn't need to go.","I needn't have gone.","I mustn't go.","I shouldn't go."],1,"Needn't have + participio."]
+]},
+
+{id:"e4",lv:"experto1",t:"Estilo académico",sum:"Nominalización, pasivas de reporte y lenguaje cauteloso para escribir con rigor.",
+lesson:[
+{h:"Nominalización y estilo impersonal",p:"El inglés académico prefiere sustantivos a verbos y evita la primera persona: <i>They decided quickly</i> → <i>The decision was made quickly</i>. Son frecuentes las estructuras impersonales: <b>It is argued that…</b>, <b>It has been shown that…</b>, <b>There is evidence that…</b>.",ex:[["It is argued that technology has changed education.","Se argumenta que la tecnología ha cambiado la educación."],["There is evidence that sleep improves memory.","Hay evidencia de que el sueño mejora la memoria."],["The expansion of the company led to higher costs.","La expansión de la empresa llevó a costos más altos."]]},
+{h:"Pasivas de reporte",p:"<b>It is said / believed / thought / reported that + oración</b>, o <b>sujeto + is said to + infinitivo</b>: <i>He is said to be very rich.</i> Para hablar del pasado: <b>is said to have + participio</b>: <i>The company is believed to have lost millions.</i> Son muy típicas de noticias y textos formales.",ex:[["He is said to be the best surgeon in the country.","Se dice que es el mejor cirujano del país."],["The building is believed to have been built in 1850.","Se cree que el edificio fue construido en 1850."],["It is reported that talks have failed.","Se informa que las conversaciones han fracasado."]]},
+{h:"Hedging: matizar lo que afirmas",p:"En textos académicos se evita afirmar de forma absoluta: <b>tend to, appear to, seem to, may, suggest, arguably, to some extent, in most cases</b>. Se escribe <i>The results suggest that…</i> en lugar de <i>The results prove that…</i>. Para destacar con precisión se usa <b>notably, particularly, in particular</b>.",ex:[["The findings suggest that the policy was effective.","Los hallazgos sugieren que la política fue efectiva."],["This approach is arguably more efficient.","Este enfoque es posiblemente más eficiente."],["To some extent, the results support the theory.","Hasta cierto punto, los resultados respaldan la teoría."]]}
+],
+vocab:[["argue","argumentar"],["evidence","evidencia"],["findings","hallazgos"],["arguably","posiblemente"],["to some extent","hasta cierto punto"],["tend to","tender a"],["appear","parecer"],["significant","significativo"],["notably","notablemente"],["claim","afirmación"]],
+ex:[
+["mc","Which sentence sounds more academic?",["They decided to leave quickly.","The decision to leave was taken quickly.","They just left.","They bolted."],1,"El estilo académico usa nominalización y pasiva."],
+["mc","He is said ___ very rich.",["being","to be","is","be"],1,"Is said + to + infinitivo."],
+["mc","The company is believed ___ lost millions last year.",["to have","having","to has","has"],0,"Is believed + to have + participio."],
+["fill","It is widely ___ that exercise improves mood. (believe)","believed","It is + participio + that…"],
+["mc","Which phrase softens a claim?",["This proves that","The results suggest that","It is certain that","Everyone knows that"],1,"Suggest es un verbo cauteloso (hedging)."],
+["fill","The data ___ to indicate a trend. (appear)","appear|appears","El verbo appear introduce una afirmación cautelosa."],
+["order","Se cree que él es inocente.","He is believed to be innocent.","Is believed + to + infinitivo."],
+["mc","«Arguably» means:",["definitivamente no","posiblemente / se puede argumentar que","nunca","exactamente"],1,"Arguably introduce una afirmación defendible pero discutible."]
+]},
+
+{id:"e5",lv:"experto1",t:"Phrasal verbs y verbos con preposición",sum:"Verbos con partícula de nivel avanzado y combinaciones fijas con preposición.",
+lesson:[
+{h:"Phrasal verbs de nivel C1",p:"<b>Come up with</b> (idear), <b>live up to</b> (estar a la altura de), <b>get round to</b> (encontrar tiempo para), <b>fall through</b> (fracasar un plan), <b>phase out</b> (eliminar gradualmente), <b>bring about</b> (provocar), <b>pick up on</b> (notar), <b>hold back</b> (contener), <b>back out</b> (echarse atrás), <b>brush up on</b> (repasar).",ex:[["We need to come up with a better idea.","Necesitamos idear una idea mejor."],["The deal fell through at the last minute.","El trato fracasó a último minuto."],["I must brush up on my Spanish before the trip.","Tengo que repasar mi español antes del viaje."]]},
+{h:"Separables e inseparables",p:"En los <b>separables</b> el objeto puede ir en medio: <i>bring the issue up / bring up the issue</i>. Con pronombre siempre va en medio: <i>bring it up</i>. En los <b>inseparables</b> el objeto va después: <i>look after the kids</i> (nunca «look the kids after»). Los de tres palabras (<i>put up with, look forward to</i>) tampoco se separan.",ex:[["She brought the idea up at the meeting.","Ella planteó la idea en la reunión."],["I'll look after your dog.","Cuidaré a tu perro."],["I can't put up with this noise.","No soporto este ruido."]]},
+{h:"Verbo + preposición fija",p:"Algunos verbos exigen una preposición concreta: <b>depend on</b>, <b>consist of</b>, <b>result in</b> (tener como resultado) / <b>result from</b> (ser consecuencia de), <b>account for</b>, <b>comply with</b>, <b>object to</b>, <b>benefit from</b>, <b>cope with</b>. Después de preposición va <b>-ing</b>: <i>I look forward to hearing from you</i> (no «to hear»).",ex:[["The accident resulted in several delays.","El accidente provocó varios retrasos."],["Employees must comply with safety rules.","Los empleados deben cumplir las normas de seguridad."],["I look forward to hearing from you.","Espero tener noticias suyas."]]}
+],
+vocab:[["come up with","idear"],["live up to","estar a la altura de"],["fall through","fracasar (un plan)"],["phase out","eliminar gradualmente"],["bring about","provocar"],["pick up on","notar / captar"],["back out","echarse atrás"],["brush up on","repasar"],["account for","explicar / representar"],["comply with","cumplir con"]],
+ex:[
+["mc","We need to ___ a solution by Friday.",["come up with","come across","come off","come in"],0,"Come up with = idear."],
+["mc","The plan ___ because of a lack of funds.",["fell through","fell down","fell off","fell for"],0,"Fall through = fracasar."],
+["mc","I'm looking forward ___ you.",["to meet","to meeting","meeting","for meeting"],1,"Look forward to + -ing."],
+["mc","Choose the correct sentence:",["She looked the kids after.","She looked after the kids.","She looked after them kids.","She after looked the kids."],1,"Look after es inseparable."],
+["fill","The company will ___ out the old model next year. (eliminar gradualmente)","phase","Phase out = eliminar gradualmente."],
+["fill","All employees must comply ___ the safety rules.","with","Comply with = cumplir con."],
+["mc","«Bring about» means:",["traer consigo","provocar / producir","aburrir","mencionar"],1,"Bring about = provocar un cambio."],
+["order","Tengo que repasar mi inglés.","I need to brush up on my English.|I have to brush up on my English.","Brush up on = repasar."]
+]},
+
+{id:"e6",lv:"experto1",t:"Pronunciación y entonación",sum:"Acento de palabra, schwa, habla conectada y entonación para sonar más natural.",
+lesson:[
+{h:"El acento de palabra",p:"En inglés cada palabra de más de una sílaba tiene una sílaba tónica y el resto se reduce. Muchos sustantivos y verbos se distinguen solo por el acento: <b>REcord</b> (sustantivo) y <b>reCORD</b> (verbo); <b>PREsent</b> y <b>preSENT</b>. Las palabras terminadas en <b>-tion, -sion, -ic</b> llevan el acento justo antes del sufijo: eduCAtion, ecoNOmic.",ex:[["We need to record the meeting.","Tenemos que grabar la reunión."],["Keep a record of every payment.","Guarda un registro de cada pago."],["The education system is changing.","El sistema educativo está cambiando."]]},
+{h:"Schwa y habla conectada",p:"La vocal más común del inglés es el <b>schwa /ə/</b>, un sonido débil y neutro que aparece en sílabas átonas: <i>about, banana, teacher</i>. En el habla real las palabras se unen: <i>want to → wanna</i>, <i>going to → gonna</i> (informal). Las palabras de función (a, the, of, to, and) suenan débiles; las de contenido (verbos, sustantivos, adjetivos) se pronuncian con fuerza.",ex:[["I'm going to see a friend.","Voy a ver a un amigo."],["Do you want to come with us?","¿Quieres venir con nosotros?"],["A cup of tea, please.","Una taza de té, por favor."]]},
+{h:"Terminaciones -ed y -s, y entonación",p:"<b>-ed</b> suena /t/ tras sonidos sordos (walked, stopped), /d/ tras sonidos sonoros (played, called) y /ɪd/ tras t o d (wanted, needed). La <b>-s</b> suena /s/, /z/ o /ɪz/ (cats, dogs, buses). La entonación <b>sube</b> al final de preguntas de sí / no y <b>baja</b> en preguntas con wh- y en afirmaciones.",ex:[["She wanted to leave early.","Ella quería irse temprano."],["Are you coming tonight?","¿Vienes esta noche?"],["Where do you work?","¿Dónde trabajas?"]]}
+],
+vocab:[["stress","acento tónico"],["syllable","sílaba"],["pronunciation","pronunciación"],["intonation","entonación"],["rhythm","ritmo"],["vowel","vocal"],["consonant","consonante"],["silent letter","letra muda"],["accent","acento (dialecto)"],["fluent","fluido"]],
+ex:[
+["mc","In the noun «record» (a record of payments), the stress falls on:",["the second syllable","the first syllable","both equally","neither"],1,"Sustantivo: REcord, acento en la primera sílaba."],
+["mc","In the verb «record» (to record a song), the stress falls on:",["the first syllable","the second syllable","both equally","neither"],1,"Verbo: reCORD, acento en la segunda sílaba."],
+["mc","How is the «-ed» in «wanted» pronounced?",["/t/","/d/","/ɪd/","it is silent"],2,"Tras t o d, -ed suena /ɪd/ y agrega una sílaba."],
+["mc","How is the «-ed» in «walked» pronounced?",["/t/","/d/","/ɪd/","/ed/"],0,"Tras un sonido sordo (k), -ed suena /t/."],
+["mc","Which is the most common vowel sound in unstressed syllables?",["/æ/","the schwa /ə/","/iː/","/uː/"],1,"El schwa /ə/ es la vocal átona típica del inglés."],
+["mc","Intonation usually ___ at the end of a yes / no question.",["falls","rises","stays flat","disappears"],1,"En preguntas de sí / no la entonación sube."],
+["mc","In which word is the «k» silent?",["kitchen","knife","kind","key"],1,"En «knife» la k inicial no se pronuncia."],
+["mc","Which word is stressed on the second syllable?",["table","happy","about","doctor"],2,"aBOUT lleva el acento en la segunda sílaba."]
+]}
+);
+UNITS.push(
+{id:"f1",lv:"experto2",t:"Matices y falsos amigos",sum:"Elegir la palabra exacta: connotación, verbos de mirar y decir, y falsos amigos del español.",
+lesson:[
+{h:"Verbos de mirar y de hablar",p:"Para «mirar»: <b>glance</b> (una mirada rápida), <b>stare</b> (mirar fijamente, a veces con descortesía), <b>gaze</b> (mirar largo rato, con admiración o ensueño), <b>glimpse</b> (ver un instante). Para «decir»: <b>whisper</b> (susurrar), <b>mutter</b> (murmurar entre dientes, con queja), <b>stammer</b> (tartamudear), <b>declare</b> (afirmar con solemnidad). La palabra elegida transmite actitud.",ex:[["He glanced at his watch.","Echó un vistazo a su reloj."],["Don't stare at people.","No mires fijamente a la gente."],["She muttered something under her breath.","Murmuró algo entre dientes."]]},
+{h:"Falsos amigos frecuentes",p:"<b>Actually</b> = en realidad (no «actualmente», que es <i>currently</i>). <b>Eventually</b> = finalmente (no «eventualmente»). <b>Sensible</b> = sensato (sensible es <i>sensitive</i>). <b>Embarrassed</b> = avergonzado (embarazada es <i>pregnant</i>). <b>Library</b> = biblioteca (librería es <i>bookshop</i>). <b>Attend</b> = asistir (<i>assist</i> es ayudar). <b>Sympathetic</b> = comprensivo (simpático es <i>nice</i>).",ex:[["Actually, I disagree.","En realidad, no estoy de acuerdo."],["He eventually found a job.","Finalmente encontró trabajo."],["I was so embarrassed.","Me dio mucha vergüenza."]]},
+{h:"Connotación: mismo significado, distinto tono",p:"Dos palabras con un sentido básico parecido pueden tener tono muy distinto: <i>slim</i> (positivo), <i>thin</i> (neutro), <i>skinny</i> (negativo, demasiado delgado). <i>Cheap</i> (barato, a veces de mala calidad) frente a <i>inexpensive</i> (neutro o positivo). <i>Stubborn</i> (terco, negativo) frente a <i>determined</i> (decidido, positivo).",ex:[["She is slim and elegant.","Ella es delgada y elegante."],["He's stubborn, but she's determined.","Él es terco, pero ella es decidida."],["The hotel is inexpensive and clean.","El hotel es económico y limpio."]]}
+],
+vocab:[["glance","mirar de reojo / un vistazo"],["stare","mirar fijamente"],["gaze","contemplar"],["mutter","murmurar"],["whisper","susurrar"],["actually","en realidad"],["eventually","finalmente"],["sensible","sensato"],["embarrassed","avergonzado"],["attend","asistir a"]],
+ex:[
+["mc","«Actually» in English means:",["actualmente","en realidad","a propósito","finalmente"],1,"Actually = en realidad. Actualmente se dice currently."],
+["mc","«Eventually» means:",["eventualmente (quizá)","finalmente","rápidamente","a veces"],1,"Eventually = al final, después de un tiempo."],
+["mc","He gave a very ___ answer: calm and practical.",["sensitive","sensible","sensational","sensuous"],1,"Sensible = sensato."],
+["mc","How do you say «Estoy embarazada» in English?",["I'm embarrassed.","I'm pregnant.","I'm sensible.","I'm sympathetic."],1,"Pregnant = embarazada. Embarrassed = avergonzado."],
+["mc","Which verb means to look at someone for a long time, often rudely?",["glance","stare","glimpse","blink"],1,"Stare = mirar fijamente."],
+["fill","I want to ___ the conference next week. (asistir)","attend","Attend = asistir. Assist = ayudar."],
+["mc","The tone of «skinny» is usually:",["positive","negative","formal","technical"],1,"Skinny sugiere excesiva delgadez y suele ser negativo."],
+["order","Finalmente encontré las llaves.","Eventually I found the keys.|I eventually found the keys.|I found the keys eventually.","Eventually = finalmente."]
+]},
+
+{id:"f2",lv:"experto2",t:"Escritura argumentativa",sum:"Estructurar un ensayo, conceder y refutar, y mantener la cohesión sin repetirte.",
+lesson:[
+{h:"Estructura del ensayo",p:"Introducción (contexto y <b>thesis statement</b>, la postura que defiendes), párrafos de desarrollo y conclusión que resume sin repetir. Cada párrafo comienza con una <b>topic sentence</b> (su idea principal) y sigue el patrón <b>PEEL</b>: Point (idea), Evidence (evidencia), Explanation (explicación) y Link (conexión con la tesis).",ex:[["This essay argues that remote work benefits both employers and employees.","Este ensayo sostiene que el trabajo remoto beneficia a empleadores y empleados."],["Firstly, remote work reduces commuting time.","En primer lugar, el trabajo remoto reduce el tiempo de traslado."],["In conclusion, the evidence supports a flexible approach.","En conclusión, la evidencia respalda un enfoque flexible."]]},
+{h:"Concesión y refutación",p:"Reconocer el otro lado fortalece el argumento: <b>It is true that… ; however…</b>, <b>Admittedly, … Nevertheless, …</b>, <b>While some argue that…, others maintain that…</b>. Para refutar: <b>This view overlooks…</b>, <b>This argument fails to take into account…</b>.",ex:[["Admittedly, the cost is high; nevertheless, the benefits outweigh it.","Es cierto que el costo es alto; sin embargo, los beneficios lo superan."],["While some argue that taxes are too high, others disagree.","Mientras algunos sostienen que los impuestos son muy altos, otros no están de acuerdo."],["This argument fails to take into account the long-term effects.","Este argumento no considera los efectos a largo plazo."]]},
+{h:"Cohesión y paráfrasis",p:"Evita repetir palabras: usa sinónimos, pronombres y sustantivos generales (<i>this issue, such measures, the former / the latter</i>). Parafrasear significa cambiar la estructura y el vocabulario sin cambiar el significado: <i>Many people worry about pollution</i> → <i>Pollution is a source of widespread concern.</i>",ex:[["Cars and trains pollute; the former more than the latter.","Autos y trenes contaminan; los primeros más que los segundos."],["Such measures may reduce emissions.","Tales medidas podrían reducir las emisiones."],["Pollution is a source of widespread concern.","La contaminación es una fuente de preocupación generalizada."]]}
+],
+vocab:[["thesis statement","tesis"],["topic sentence","oración temática"],["evidence","evidencia"],["counterargument","contraargumento"],["admittedly","es cierto que"],["overlook","pasar por alto"],["whereas","mientras que"],["the former","el primero"],["the latter","el último"],["paraphrase","parafrasear"]],
+ex:[
+["mc","A topic sentence is:",["la última frase del ensayo","la idea principal de un párrafo","una cita","un título"],1,"La topic sentence presenta la idea central del párrafo."],
+["mc","Which word concedes a point before disagreeing?",["Admittedly,","In conclusion,","For example,","Moreover,"],0,"Admittedly reconoce el punto contrario."],
+["mc","«The former» refers to:",["the last thing mentioned","the first of two things mentioned","both things","neither"],1,"The former = el primero de dos."],
+["fill","While some argue that taxes are too high, ___ maintain the opposite. (otros)","others","Some … others …"],
+["mc","Which is a good paraphrase of «Many people worry about pollution»?",["Pollution is a source of widespread concern.","Pollution people worry many.","Many people worry about pollution.","Pollution is bad."],0,"Una buena paráfrasis cambia la estructura y mantiene el sentido."],
+["mc","PEEL stands for:",["Point, Evidence, Explanation, Link","Plan, Edit, Explain, Learn","Paragraph, Example, End, List","Point, Example, Evaluate, Leave"],0,"PEEL = Point, Evidence, Explanation, Link."],
+["order","Es cierto que es caro; sin embargo, vale la pena.","Admittedly it is expensive; nevertheless, it is worth it.|It is true that it is expensive; however, it is worth it.","Concesión + refutación."],
+["mc","This argument fails ___ into account the cost.",["to take","taking","take","to taking"],0,"Fail + to + infinitivo."]
+]},
+
+{id:"f3",lv:"experto2",t:"Modismos y colocaciones",sum:"Combinaciones naturales de palabras, modismos frecuentes y parejas fijas.",
+lesson:[
+{h:"Adverbio + adjetivo",p:"<b>Deeply</b> concerned, <b>highly</b> unlikely, <b>bitterly</b> cold, <b>utterly</b> ridiculous, <b>fully</b> aware, <b>widely</b> known, <b>fiercely</b> competitive. No todos se intercambian: se dice <i>highly unlikely</i>, pero no «deeply unlikely». Aprender estas parejas hace que tu inglés suene natural.",ex:[["It is highly unlikely that he will come.","Es muy poco probable que venga."],["We were deeply concerned about the results.","Nos preocuparon mucho los resultados."],["It was a bitterly cold night.","Fue una noche terriblemente fría."]]},
+{h:"Modismos de nivel avanzado",p:"<b>Bite the bullet</b> (aguantar lo inevitable), <b>cut corners</b> (ahorrar esfuerzo a costa de calidad), <b>the tip of the iceberg</b> (la punta del iceberg), <b>a blessing in disguise</b> (algo malo que resulta bueno), <b>get the ball rolling</b> (poner algo en marcha), <b>on the same page</b> (de acuerdo en lo esencial), <b>back to square one</b> (volver a empezar), <b>beat around the bush</b> (andarse por las ramas).",ex:[["Let's get the ball rolling.","Pongamos esto en marcha."],["Losing that job was a blessing in disguise.","Perder ese trabajo fue una bendición disfrazada."],["Stop beating around the bush.","Deja de andarte por las ramas."]]},
+{h:"Binomios y registro",p:"Parejas fijas: <b>odds and ends</b> (cosas sueltas), <b>pros and cons</b>, <b>safe and sound</b>, <b>sooner or later</b>, <b>by and large</b> (en general), <b>more or less</b>. El orden no se cambia: «cons and pros» suena extraño. Para el registro: <i>kids</i> (informal), <i>children</i> (neutro), <i>offspring</i> (muy formal).",ex:[["We weighed up the pros and cons.","Sopesamos los pros y los contras."],["By and large, the project was a success.","En general, el proyecto fue un éxito."],["They arrived safe and sound.","Llegaron sanos y salvos."]]}
+],
+vocab:[["bite the bullet","aguantar lo inevitable"],["cut corners","ahorrar a costa de calidad"],["tip of the iceberg","punta del iceberg"],["blessing in disguise","bendición disfrazada"],["on the same page","en la misma sintonía"],["square one","punto de partida"],["beat around the bush","andarse por las ramas"],["by and large","en general"],["sooner or later","tarde o temprano"],["odds and ends","cosas sueltas"]],
+ex:[
+["mc","It's ___ unlikely that he will come.",["deeply","highly","bitterly","fiercely"],1,"La colocación natural es highly unlikely."],
+["mc","A «blessing in disguise» is:",["un regalo envuelto","algo malo que resulta bueno","un secreto","un disfraz"],1,"Algo que parece negativo pero resulta positivo."],
+["mc","To «cut corners» means to:",["tomar un atajo físico","hacer algo con menos esfuerzo o calidad para ahorrar","doblar esquinas","empezar de nuevo"],1,"Cut corners = ahorrar a costa de la calidad."],
+["fill","Stop beating around the ___ and tell me! (bush)","bush","Beat around the bush = andarse por las ramas."],
+["mc","«By and large» means:",["en general","por separado","a lo largo","por poco"],0,"By and large = en general."],
+["mc","Which is the natural order?",["cons and pros","pros and cons","and pros cons","cons pros and"],1,"Los binomios tienen orden fijo: pros and cons."],
+["order","Tarde o temprano lo sabrá.","Sooner or later he will know.|Sooner or later she will know.|Sooner or later they will know.","Sooner or later = tarde o temprano."],
+["mc","We're back to ___ one. (empezar de nuevo)",["square","step","line","point"],0,"Back to square one = volver al principio."]
+]},
+
+{id:"f4",lv:"experto2",t:"Verbo + -ing o infinitivo",sum:"Patrones verbales que cambian el significado y cláusulas de participio para escribir con fluidez.",
+lesson:[
+{h:"Cambio de significado",p:"<b>Remember doing</b> (recordar haberlo hecho) frente a <b>remember to do</b> (acordarse de hacerlo). <b>Stop doing</b> (dejar de) frente a <b>stop to do</b> (detenerse para). <b>Try doing</b> (probar) frente a <b>try to do</b> (intentar). <b>Regret doing</b> (lamentar haberlo hecho) frente a <b>regret to say</b> (sentir tener que decir). <b>Go on doing</b> (continuar) frente a <b>go on to do</b> (pasar a hacer).",ex:[["I remember meeting her last year.","Recuerdo haberla conocido el año pasado."],["Remember to lock the door.","Acuérdate de cerrar la puerta con llave."],["He stopped to have a coffee.","Se detuvo para tomar un café."]]},
+{h:"Verbos con -ing y verbos con infinitivo",p:"Con <b>-ing</b>: enjoy, avoid, admit, deny, suggest, consider, mind, risk, miss, postpone. Con <b>to + infinitivo</b>: afford, agree, decide, hope, manage, refuse, promise, plan, pretend, fail. Con ambos y casi sin cambio de sentido: begin, start, continue, like, love, hate, prefer.",ex:[["She suggested taking a taxi.","Sugirió tomar un taxi."],["We can't afford to buy a new car.","No podemos permitirnos comprar un auto nuevo."],["He admitted breaking the window.","Admitió haber roto la ventana."]]},
+{h:"Cláusulas de participio",p:"Reducen oraciones y dan fluidez. <b>-ing</b> (activa y simultánea): <i>Walking home, I met Ana.</i> <b>Participio pasado</b> (pasiva): <i>Written in 1990, the book is still popular.</i> <b>Having + participio</b> (acción anterior): <i>Having finished, she left.</i> El sujeto del participio debe ser el mismo de la oración principal; si no, se produce un error llamado «dangling participle».",ex:[["Walking home, I met an old friend.","Caminando a casa, me encontré con un viejo amigo."],["Written in 1990, the book is still popular.","Escrito en 1990, el libro sigue siendo popular."],["Having finished the report, she went home.","Habiendo terminado el informe, se fue a casa."]]}
+],
+vocab:[["avoid","evitar"],["admit","admitir"],["afford","permitirse (dinero)"],["manage","lograr"],["refuse","negarse"],["pretend","fingir"],["postpone","posponer"],["consider","considerar"],["fail","fracasar en"],["mind","importar / molestar"]],
+ex:[
+["mc","I remember ___ him last year. (ya lo conocí)",["to meet","meeting","meet","to meeting"],1,"Remember + -ing = recordar algo que ya hiciste."],
+["mc","Remember ___ the door! (no lo olvides)",["locking","to lock","lock","to locking"],1,"Remember + to = acordarse de hacer algo."],
+["mc","He stopped ___ a coffee.",["having","to have","have","to having"],1,"Stop + to = detenerse para hacer algo."],
+["mc","She suggested ___ a taxi.",["to take","taking","take","to taking"],1,"Suggest + -ing."],
+["mc","We can't afford ___ a new car.",["buying","to buy","buy","to buying"],1,"Afford + to + infinitivo."],
+["fill","He admitted ___ the window. (break)","breaking","Admit + -ing."],
+["mc","Which sentence is correct?",["Walking down the street, a bird hit my head.","Walking down the street, I saw a beautiful bird.","Walked down the street, I saw a bird.","To walking down the street, I saw a bird."],1,"El sujeto del participio debe ser el de la oración principal (I)."],
+["order","Habiendo terminado, se fue.","Having finished, she left.|Having finished, he left.","Having + participio = acción anterior."]
+]},
+
+{id:"f5",lv:"experto2",t:"Inglés profesional",sum:"Reuniones, desacuerdo cortés, correos y negociación con el tono adecuado.",
+lesson:[
+{h:"Reuniones y desacuerdo cortés",p:"Para opinar: <b>In my view…</b>, <b>As I see it…</b>. Para discrepar con cortesía: <b>I see your point, but…</b>, <b>With all due respect, …</b>, <b>I'm not sure I agree…</b>. Para pedir más detalle: <b>Could you elaborate on…?</b> Para cerrar: <b>Let's wrap up</b>, <b>To sum up</b>, <b>The next steps are…</b>",ex:[["I see your point, but I have a different view.","Entiendo su punto, pero tengo otra opinión."],["Could you elaborate on that?","¿Podría explicar eso con más detalle?"],["Let's wrap up and agree on the next steps.","Cerremos y acordemos los próximos pasos."]]},
+{h:"Cortesía y suavizadores",p:"Mientras más indirecta, más cortés es la frase: <i>Send me the report</i> → <i>Could you send me the report?</i> → <i>I was wondering if you could send me the report.</i> Los suavizadores (<b>a bit, slightly, somewhat, fairly</b>) y las preguntas como <i>Have you thought about…?</i> o <i>It might be worth reconsidering…</i> permiten criticar sin ofender.",ex:[["I was wondering if you could help me.","Me preguntaba si podría ayudarme."],["The schedule is slightly ambitious.","El calendario es algo ambicioso."],["It might be worth reconsidering the budget.","Podría valer la pena reconsiderar el presupuesto."]]},
+{h:"Correos y negociación",p:"Un correo eficaz tiene asunto claro, una petición por párrafo, la acción que esperas y un plazo (<i>by Friday</i>). En negociación se usan frases como <b>If you could…, we would be able to…</b>, <b>We could meet you halfway</b> (llegar a un punto medio), <b>That's a deal-breaker</b> (algo que impide el acuerdo) y <b>Let's park that for now</b> (lo dejamos para después).",ex:[["If you could confirm by Friday, we would be able to proceed.","Si pudiera confirmar el viernes, podríamos continuar."],["We could meet you halfway on the price.","Podemos llegar a un punto medio en el precio."],["Let's park that issue for now.","Dejemos ese tema para después."]]}
+],
+vocab:[["elaborate on","explicar con más detalle"],["with all due respect","con el debido respeto"],["wrap up","cerrar / concluir"],["action item","tarea pendiente"],["deadline","plazo"],["follow up","dar seguimiento"],["meet halfway","llegar a un punto medio"],["deal-breaker","factor decisivo en contra"],["draft","borrador"],["stakeholder","parte interesada"]],
+ex:[
+["mc","Which is the most polite request?",["Send me the file.","Can you send the file?","I was wondering if you could send me the file.","You must send the file."],2,"Mientras más indirecta, más cortés."],
+["mc","«Let's wrap up» means:",["empecemos","cerremos / terminemos","repitamos","discutamos"],1,"Wrap up = concluir."],
+["mc","«With all due respect» is used to:",["agradecer","discrepar con cortesía","despedirse","dar una orden"],1,"Introduce un desacuerdo con respeto."],
+["fill","Could you ___ on that point? (explicar con más detalle)","elaborate","Elaborate on = explicar con más detalle."],
+["mc","A «deal-breaker» is:",["un buen acuerdo","algo que hace imposible el acuerdo","un regalo","un contrato"],1,"Deal-breaker = factor que impide cerrar un trato."],
+["fill","I'll ___ up with you next week. (dar seguimiento)","follow","Follow up = dar seguimiento."],
+["mc","Which sentence softens a criticism?",["Your plan is terrible.","Your plan is slightly ambitious; it might be worth reconsidering the timeline.","Fix it.","You are wrong."],1,"Suavizadores y sugerencias evitan sonar agresivo."],
+["order","Podemos llegar a un punto medio.","We could meet you halfway.|We could meet halfway.","Meet halfway = llegar a un punto medio."]
+]},
+
+{id:"f6",lv:"experto2",t:"Variedades, ironía y registro",sum:"Inglés británico y estadounidense, humor, subestimación y cómo cambia el tono según el contexto.",
+lesson:[
+{h:"Inglés británico y estadounidense",p:"Vocabulario: <b>lift / elevator</b>, <b>flat / apartment</b>, <b>boot / trunk</b>, <b>biscuit / cookie</b>, <b>pavement / sidewalk</b>, <b>holiday / vacation</b>, <b>petrol / gas</b>, <b>queue / line</b>, <b>rubbish / trash</b>. Ortografía: colour / color, centre / center, realise / realize, travelling / traveling. En gramática, el inglés británico usa más <i>Have you got…?</i> y <i>I've just eaten</i>, y el estadounidense <i>Do you have…?</i> y <i>I just ate</i>.",ex:[["Let's take the lift to the third floor.","Tomemos el ascensor al tercer piso."],["I live in a flat near the centre.","Vivo en un departamento cerca del centro."],["We waited in a long queue.","Esperamos en una larga fila."]]},
+{h:"Ironía y subestimación",p:"El humor británico usa mucho el <b>understatement</b> (decir menos de lo que se piensa): <i>It's a bit chilly</i> puede significar que hace un frío terrible; <i>Not bad</i>, que algo es muy bueno; <i>I might be slightly late</i>, que llegarás muy tarde. El <b>sarcasmo</b> dice lo contrario de lo que se siente: <i>Oh great, another meeting.</i> Para entenderlo, atiende al tono y al contexto.",ex:[["It's a bit chilly today.","Hace un poco de fresco hoy (quizás mucho más)."],["Not bad at all!","¡Nada mal! (muy bueno)"],["Oh great, another meeting.","Qué bien, otra reunión. (sarcasmo)"]]},
+{h:"Registro y jerga",p:"El mismo mensaje cambia según el registro: <i>I'm knackered</i> (británico informal) → <i>I'm exhausted</i> (neutro) → <i>I am extremely fatigued</i> (formal). Jerga común: <b>gonna, wanna, kinda, ain't</b>; <b>cheers</b> (gracias, o salud), <b>mate</b> (amigo, en Reino Unido y Australia), <b>dude</b> (en EE. UU.). Úsala solo cuando conozcas el ambiente.",ex:[["I'm absolutely knackered.","Estoy muerto de cansancio."],["Cheers, mate!","¡Gracias, amigo!"],["I am extremely grateful for your assistance.","Le estoy sumamente agradecido por su ayuda."]]}
+],
+vocab:[["lift","ascensor (UK)"],["flat","departamento (UK)"],["boot","maletero (UK)"],["biscuit","galleta (UK)"],["pavement","vereda (UK)"],["queue","fila"],["rubbish","basura (UK)"],["understatement","subestimación"],["sarcasm","sarcasmo"],["knackered","agotado (UK informal)"]],
+ex:[
+["mc","In American English, «elevator» is «___» in British English.",["lift","stairs","escalator","flat"],0,"Elevator (EE. UU.) = lift (Reino Unido)."],
+["mc","British «biscuit» corresponds to American:",["cookie","cake","bread","candy"],0,"Biscuit (UK) = cookie (EE. UU.)."],
+["mc","Which is the British spelling?",["color","colour","colur","collor"],1,"Colour es la ortografía británica."],
+["mc","«It's a bit chilly» may actually mean:",["Hace un poco de fresco, nada más.","Hace mucho frío (subestimación).","No hace frío.","Hace calor."],1,"En el humor británico, a bit suele subestimar."],
+["mc","«Oh great, another meeting» is probably:",["sincere","sarcastic","formal","a question"],1,"Dice lo contrario de lo que siente: sarcasmo."],
+["mc","Which is the most formal option?",["I'm knackered.","I'm tired.","I'm worn out.","I am extremely fatigued."],3,"Extremely fatigued es el registro más formal."],
+["fill","British «petrol» is American «___».","gas|gasoline","Petrol (UK) = gas o gasoline (EE. UU.)."],
+["order","¿Dónde está el ascensor?","Where is the lift?","Lift es la palabra británica para ascensor."]
+]}
+);
 
 const PLACE=[
 ["b","My sister ___ a teacher.",["am","is","are","be"],1,"Con she se usa «is»: My sister is a teacher."],
@@ -537,7 +757,11 @@ const PLACE=[
 ["a","By the time we arrived, they ___ left.",["have","had","were","would"],1,"Acción previa a otra pasada: pasado perfecto (had)."],
 ["a","If I ___ harder, I would have passed.",["studied","had studied","would study","study"],1,"Tercer condicional: if + pasado perfecto."],
 ["a","___ you need help, please call us.",["Would","Should","Did","Could"],1,"Inversión formal: Should you need…"],
-["a","«I will call you,» he said. → He said he ___ call me.",["will","would","did","can"],1,"En discurso indirecto will pasa a would."]
+["a","«I will call you,» he said. → He said he ___ call me.",["will","would","did","can"],1,"En discurso indirecto will pasa a would."],
+["e","Not only ___ the exam, but she also got the highest mark.",["she passed","did she pass","she did pass","passed she"],1,"Inversión tras «Not only»: auxiliar + sujeto + verbo base."],
+["e","It's high time the government ___ action.",["takes","took","will take","taking"],1,"It's high time + sujeto + pasado simple."],
+["e","You ___ me a gift. It wasn't necessary, but thank you.",["needn't have bought","mustn't buy","shouldn't to buy","can't have bought"],0,"Needn't have + participio: no hacía falta, pero se hizo."],
+["e","Which sentence is the most appropriate for an academic essay?",["The results prove it, no doubt.","The results suggest that the effect may be significant.","Everybody knows it works.","It's obvious."],1,"El estilo académico usa lenguaje cauteloso (suggest, may)."]
 ];
 
 (function(){
@@ -548,9 +772,11 @@ var esc=function(s){return String(s).replace(/[&<>"]/g,function(c){return {"&":"
 var LV={
  basico:{n:"Básico",cefr:"A1 – A2",k:"b",d:"Para empezar de cero: presentarte, rutinas, comida y contar qué hiciste ayer."},
  intermedio:{n:"Intermedio",cefr:"B1 – B2",k:"i",d:"Para defenderte con soltura: experiencias, planes, hipótesis, consejos y comparaciones."},
- avanzado:{n:"Avanzado",cefr:"C1",k:"a",d:"Para hablar y escribir con precisión: matices, registro formal, modismos y estructuras complejas."}
+ avanzado:{n:"Avanzado",cefr:"C1",k:"a",d:"Para hablar y escribir con precisión: matices, registro formal, modismos y estructuras complejas."},
+ experto1:{n:"Experto 1",cefr:"C1+ – C2",k:"e",d:"Estructuras sofisticadas: inversión, subjuntivo, modales de pasado, estilo académico, verbos con partícula y pronunciación."},
+ experto2:{n:"Experto 2",cefr:"C2",k:"f",d:"Dominio fino: matices, escritura argumentativa, modismos, patrones verbales, inglés profesional y variedades del idioma."}
 };
-var ORDER=["basico","intermedio","avanzado"];
+var ORDER=["basico","intermedio","avanzado","experto1","experto2"];
 var byId={};UNITS.forEach(function(u){byId[u.id]=u});
 var inLevel=function(lv){return UNITS.filter(function(u){return u.lv===lv})};
 
@@ -670,7 +896,7 @@ function shownAnswer(q,val){
 /* ---------- vistas ---------- */
 var root=$("#view");
 function setNav(cur){
- var items=[["inicio","Inicio"],["basico","Básico"],["intermedio","Intermedio"],["avanzado","Avanzado"],["juegos","Juegos"],["test","Test de nivel"]];
+ var items=[["inicio","Inicio"],["basico","Básico"],["intermedio","Intermedio"],["avanzado","Avanzado"],["experto1","Experto 1"],["experto2","Experto 2"],["juegos","Juegos"],["test","Test de nivel"]];
  $("#nav").innerHTML=items.map(function(x){return '<a href="#'+x[0]+'"'+(x[0]===cur?' aria-current="page"':"")+">"+x[1]+"</a>"}).join("");
  var tot=UNITS.length,d=UNITS.filter(function(u){return done(u.id)}).length;
  var sk=streak();$("#total").textContent=d+" de "+tot+" unidades completas"+(sk?" · racha de "+sk+(sk===1?" día":" días"):"");
@@ -682,8 +908,8 @@ function statusOf(id){return done(id)?["Completa","ok"]:started(id)?["En curso",
 function viewHome(){
  setNav("inicio");document.title="Aprendeya Inglés";
  var last=P.last&&byId[P.last]?byId[P.last]:null;
- var h='<section class="hero"><div><p class="eyebrow">Curso de inglés para hispanohablantes</p><h1>Aprende inglés paso a paso, <span class="hl">practicando de verdad</span></h1><p class="lead">Tres niveles, dieciocho unidades cortas. Cada una tiene una explicación en español, ejemplos con audio, vocabulario y ejercicios con corrección al instante.</p><div class="row">';
- h+=last?'<a class="btn" href="#'+last.id.replace(/^/,"u-")+'">Continuar: '+esc(last.t)+'</a><a class="btn alt" href="#test">Hacer el test de nivel</a>':'<a class="btn" href="#test">¿Qué nivel tengo? Test de 12 preguntas</a><a class="btn alt" href="#basico">Empezar por el Básico</a>';
+ var h='<section class="hero"><div><p class="eyebrow">Curso de inglés para hispanohablantes</p><h1>Aprende inglés paso a paso, <span class="hl">practicando de verdad</span></h1><p class="lead">Cinco niveles, treinta unidades cortas. Cada una tiene una explicación en español, ejemplos con audio, vocabulario y ejercicios con corrección al instante.</p><div class="row">';
+ h+=last?'<a class="btn" href="#'+last.id.replace(/^/,"u-")+'">Continuar: '+esc(last.t)+'</a><a class="btn alt" href="#test">Hacer el test de nivel</a>':'<a class="btn" href="#test">¿Qué nivel tengo? Test de 16 preguntas</a><a class="btn alt" href="#basico">Empezar por el Básico</a>';
  h+='</div></div><div class="heroside" aria-label="Ejemplo de frases con audio"><p class="eyebrow">Frase del día</p><p class="big">How are you getting on with your English?</p><p class="es">¿Cómo vas con tu inglés?</p>'+sayBtn("How are you getting on with your English?")+'</div></section>';
  h+='<section class="levels">'+ORDER.map(function(k){var L=LV[k],p=levelProgress(k);return '<article class="lvcard" data-lv="'+L.k+'"><p class="cefr">'+L.cefr+'</p><h2>'+L.n+'</h2><p>'+L.d+'</p><div class="meter" role="img" aria-label="'+p.pct+"% completado"+'"><i style="width:'+p.pct+'%"></i></div><p class="small">'+p.d+' de '+p.n+' unidades completas'+(P.ex[k]!=null?" · nota del examen: "+fnum(P.ex[k]):"")+'</p><a class="btn" href="#'+k+'">Ver unidades</a></article>'}).join("")+"</section>";
  h+='<section class="gamesband"><div><h2>Repasa jugando</h2><p>Cinco juegos con el vocabulario de las unidades: memoria, contrarreloj, ahorcado, letras revueltas y escucha.</p></div><a class="btn" href="#juegos">Ir a los juegos</a></section>';
@@ -823,7 +1049,7 @@ function viewTest(){
  var qs=PLACE.map(function(r){var c=r[2][r[3]],o=shuf(r[2]);return {type:"mc",text:r[1],opts:o,ai:o.indexOf(c),tier:r[0],why:r[4],tema:r[0]}}),ws=[];
  function intro(){
   var prev=P.test?'<p class="small">Tu último resultado: nivel recomendado <b>'+esc(P.test.rec)+"</b>.</p>":"";
-  root.innerHTML='<section class="examintro"><h1>Test de nivel</h1><p class="lead">Doce preguntas cortas, de más fáciles a más difíciles. No es una nota: sirve para saber por dónde empezar. Responde sin buscar ayuda.</p>'+prev+'<button type="button" class="btn" id="go">Comenzar</button></section>';
+  root.innerHTML='<section class="examintro"><h1>Test de nivel</h1><p class="lead">Dieciséis preguntas cortas, de más fáciles a más difíciles. No es una nota: sirve para saber por dónde empezar. Responde sin buscar ayuda.</p>'+prev+'<button type="button" class="btn" id="go">Comenzar</button></section>';
   $("#go").addEventListener("click",paper);
  }
  function paper(){
@@ -837,12 +1063,12 @@ function viewTest(){
   window.scrollTo(0,0);
  }
  function finish(){
-  var c={b:0,i:0,a:0};qs.forEach(function(q,i){if(ws[i].value()===q.ai)c[q.tier]++});
+  var c={b:0,i:0,a:0,e:0};qs.forEach(function(q,i){if(ws[i].value()===q.ai)c[q.tier]++});
   var rec,key;
-  if(c.b<3){rec="Básico";key="basico"}else if(c.i<3){rec="Intermedio";key="intermedio"}else{rec="Avanzado";key="avanzado"}
+  if(c.b<3){rec="Básico";key="basico"}else if(c.i<3){rec="Intermedio";key="intermedio"}else if(c.a<3){rec="Avanzado";key="avanzado"}else if(c.e<3){rec="Experto 1";key="experto1"}else{rec="Experto 2";key="experto2"}
   P.test={rec:rec,c:c};save();markDay();
   var rv=qs.map(function(q,i){var v=ws[i].value(),ok=v===q.ai;return '<li class="'+(ok?"good":"bad")+'"><b>'+(i+1)+". "+esc(q.text)+"</b><br>"+(ok?"Correct":"Incorrect")+' · Your answer: <span lang="en">'+esc(shownAnswer(q,v))+"</span>"+(ok?"":' · Correct: <span lang="en">'+esc(q.opts[q.ai])+"</span>")+'<br><span class="why">'+esc(q.why)+"</span></li>"}).join("");
-  root.innerHTML='<section class="examres"><p class="eyebrow">Tu nivel recomendado</p><div class="score sm">'+rec+'</div><p class="lead">Aciertos: Básico '+c.b+"/4 · Intermedio "+c.i+"/4 · Avanzado "+c.a+"/4. "+(key==="basico"?"Empieza desde la primera unidad: así construyes una base sólida.":key==="intermedio"?"Ya manejas lo básico. Puedes saltar al nivel Intermedio y volver al Básico si algo te falla.":"Tienes una base fuerte. Empieza por el nivel Avanzado y usa los niveles anteriores para repasar.")+'</p><h2>Respuestas</h2><ul class="rev">'+rv+'</ul><div class="row"><a class="btn" href="#'+key+'">Ir al nivel '+rec+'</a><button type="button" class="btn alt" id="retry">Repetir el test</button></div></section>';
+  root.innerHTML='<section class="examres"><p class="eyebrow">Tu nivel recomendado</p><div class="score sm">'+rec+'</div><p class="lead">Aciertos: Básico '+c.b+"/4 · Intermedio "+c.i+"/4 · Avanzado "+c.a+"/4 · Experto "+c.e+"/4. "+(key==="basico"?"Empieza desde la primera unidad: así construyes una base sólida.":key==="intermedio"?"Ya manejas lo básico. Puedes saltar al nivel Intermedio y volver al Básico si algo te falla.":key==="avanzado"?"Tienes una base fuerte. Empieza por el nivel Avanzado y usa los niveles anteriores para repasar.":key==="experto1"?"Tu nivel es alto. Empieza por Experto 1 para pulir estructuras sofisticadas y estilo académico.":"Tu nivel es muy alto. Puedes ir directo a Experto 2 y trabajar matices, escritura argumentativa y registro.")+'</p><h2>Respuestas</h2><ul class="rev">'+rv+'</ul><div class="row"><a class="btn" href="#'+key+'">Ir al nivel '+rec+'</a><button type="button" class="btn alt" id="retry">Repetir el test</button></div></section>';
   $("#retry").addEventListener("click",viewTest);setNav("test");window.scrollTo(0,0);
  }
  intro();
@@ -889,7 +1115,7 @@ var GAMES=[
 ];
 function viewGames(){
  setNav("juegos");document.title="Juegos · Aprendeya Inglés";
- var h='<section class="lvhead gh"><p class="eyebrow">Repasa jugando</p><h1>Juegos de vocabulario</h1><p class="lead">Usan las palabras de las unidades. Elige de qué nivel quieres practicar.</p><div class="chips" role="group" aria-label="Palabras de">'+[["todos","Todos los niveles"],["basico","Básico"],["intermedio","Intermedio"],["avanzado","Avanzado"]].map(function(x){return '<button type="button" class="chip" data-pool="'+x[0]+'" aria-pressed="'+(P.pool===x[0])+'">'+x[1]+"</button>"}).join("")+'</div></section><div class="gcards">'+GAMES.map(function(g){var off=g.need==="say"&&!CAN_SAY;return '<article class="gcard"><h2>'+g.t+'</h2><p>'+g.d+'</p><p class="small">'+(off?"Necesita audio en inglés, que tu dispositivo no ofrece.":g.rec())+'</p>'+(off?"":'<a class="btn" href="#juego-'+g.id+'">Jugar</a>')+"</article>"}).join("")+'</div><section class="gamesband"><div><h2>Mis errores</h2><p>'+((P.err||[]).length?"Tienes "+P.err.length+" pregunta"+(P.err.length===1?"":"s")+" para repasar.":"Cuando falles una pregunta aparecerá aquí para repasarla.")+'</p></div><a class="btn" href="#repaso">Repasar errores</a></section>';
+ var h='<section class="lvhead gh"><p class="eyebrow">Repasa jugando</p><h1>Juegos de vocabulario</h1><p class="lead">Usan las palabras de las unidades. Elige de qué nivel quieres practicar.</p><div class="chips" role="group" aria-label="Palabras de">'+[["todos","Todos los niveles"],["basico","Básico"],["intermedio","Intermedio"],["avanzado","Avanzado"],["experto1","Experto 1"],["experto2","Experto 2"]].map(function(x){return '<button type="button" class="chip" data-pool="'+x[0]+'" aria-pressed="'+(P.pool===x[0])+'">'+x[1]+"</button>"}).join("")+'</div></section><div class="gcards">'+GAMES.map(function(g){var off=g.need==="say"&&!CAN_SAY;return '<article class="gcard"><h2>'+g.t+'</h2><p>'+g.d+'</p><p class="small">'+(off?"Necesita audio en inglés, que tu dispositivo no ofrece.":g.rec())+'</p>'+(off?"":'<a class="btn" href="#juego-'+g.id+'">Jugar</a>')+"</article>"}).join("")+'</div><section class="gamesband"><div><h2>Mis errores</h2><p>'+((P.err||[]).length?"Tienes "+P.err.length+" pregunta"+(P.err.length===1?"":"s")+" para repasar.":"Cuando falles una pregunta aparecerá aquí para repasarla.")+'</p></div><a class="btn" href="#repaso">Repasar errores</a></section>';
  root.innerHTML=h;
  $$("[data-pool]").forEach(function(b){b.addEventListener("click",function(){P.pool=b.getAttribute("data-pool");save();viewGames()})});
 }
