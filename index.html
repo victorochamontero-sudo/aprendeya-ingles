@@ -190,6 +190,15 @@ th{font:600 12px var(--f-mono);letter-spacing:.06em;text-transform:uppercase;col
 .key.good{background:var(--goodbg);border-color:var(--good)}.key.bad{background:var(--badbg);border-color:var(--bad)}
 .key:disabled{cursor:default}
 @media (max-width:480px){.mem{grid-template-columns:repeat(3,minmax(0,1fr))}.mc{min-height:76px;font-size:14px}}
+
+.spk .spktx{background:var(--soft);border-radius:10px;padding:10px 14px;margin:0}
+.spkform input{font:inherit;flex:1;min-width:200px;min-height:46px;padding:10px 14px;border-radius:10px;border:2px solid var(--line);background:var(--bg);color:var(--ink)}
+.mic{gap:8px}.mic.on{background:var(--bad);border-color:var(--bad);color:#fff;animation:micp 1s infinite}
+@keyframes micp{50%{box-shadow:0 0 0 8px rgba(179,50,31,.25)}}
+@media (prefers-reduced-motion:reduce){.mic.on{animation:none}}
+.wordsrow{margin:6px 0;font-size:1.1rem;display:flex;flex-wrap:wrap;gap:6px}
+.wh{background:var(--goodbg);color:var(--ink);border:1px solid var(--good);border-radius:6px;padding:1px 8px}
+.wm{background:var(--badbg);color:var(--ink);border:1px solid var(--bad);border-radius:6px;padding:1px 8px}
 </style>
 <div class="wrap">
 <header class="top"><a class="brand" href="#inicio">Aprendeya <span>Inglés</span></a><div class="prog"><span class="small" id="total"></span><div class="meter"><i id="totbar" style="width:0"></i></div></div></header>
@@ -896,7 +905,7 @@ function shownAnswer(q,val){
 /* ---------- vistas ---------- */
 var root=$("#view");
 function setNav(cur){
- var items=[["inicio","Inicio"],["basico","Básico"],["intermedio","Intermedio"],["avanzado","Avanzado"],["experto1","Experto 1"],["experto2","Experto 2"],["juegos","Juegos"],["test","Test de nivel"]];
+ var items=[["inicio","Inicio"],["basico","Básico"],["intermedio","Intermedio"],["avanzado","Avanzado"],["experto1","Experto 1"],["experto2","Experto 2"],["hablar","Hablar"],["juegos","Juegos"],["test","Test de nivel"]];
  $("#nav").innerHTML=items.map(function(x){return '<a href="#'+x[0]+'"'+(x[0]===cur?' aria-current="page"':"")+">"+x[1]+"</a>"}).join("");
  var tot=UNITS.length,d=UNITS.filter(function(u){return done(u.id)}).length;
  var sk=streak();$("#total").textContent=d+" de "+tot+" unidades completas"+(sk?" · racha de "+sk+(sk===1?" día":" días"):"");
@@ -913,6 +922,7 @@ function viewHome(){
  h+='</div></div><div class="heroside" aria-label="Ejemplo de frases con audio"><p class="eyebrow">Frase del día</p><p class="big">How are you getting on with your English?</p><p class="es">¿Cómo vas con tu inglés?</p>'+sayBtn("How are you getting on with your English?")+'</div></section>';
  h+='<section class="levels">'+ORDER.map(function(k){var L=LV[k],p=levelProgress(k);return '<article class="lvcard" data-lv="'+L.k+'"><p class="cefr">'+L.cefr+'</p><h2>'+L.n+'</h2><p>'+L.d+'</p><div class="meter" role="img" aria-label="'+p.pct+"% completado"+'"><i style="width:'+p.pct+'%"></i></div><p class="small">'+p.d+' de '+p.n+' unidades completas'+(P.ex[k]!=null?" · nota del examen: "+fnum(P.ex[k]):"")+'</p><a class="btn" href="#'+k+'">Ver unidades</a></article>'}).join("")+"</section>";
  h+='<section class="gamesband"><div><h2>Repasa jugando</h2><p>Cinco juegos con el vocabulario de las unidades: memoria, contrarreloj, ahorcado, letras revueltas y escucha.</p></div><a class="btn" href="#juegos">Ir a los juegos</a></section>';
+ h+='<section class="gamesband"><div><h2>Hablar y escuchar</h2><p>Nuevo: escucha preguntas en inglés y responde hablando. Hay prácticas por cada nivel.</p></div><a class="btn" href="#hablar">Practicar speaking</a></section>';
  h+='<section class="how"><h2>Cómo estudiar cada unidad</h2><ol><li><b>Lee la lección</b> (5 minutos). Está explicada en español, con ejemplos.</li><li><b>Escucha y repite en voz alta</b> cada ejemplo. Pronunciar fija lo que aprendes.</li><li><b>Practica</b> hasta lograr 70% o más. Los errores te muestran por qué.</li><li><b>Repasa el vocabulario</b> con las tarjetas, unos minutos al día.</li></ol><p class="small">Tu avance se guarda solo en este navegador.</p></section>';
  root.innerHTML=h;
 }
@@ -922,7 +932,7 @@ function viewLevel(k){
  var p=levelProgress(k);
  var h='<section class="lvhead" data-lv="'+L.k+'"><p class="cefr">'+L.cefr+'</p><h1>Nivel '+L.n+'</h1><p class="lead">'+L.d+'</p><div class="meter big" role="img" aria-label="'+p.pct+'% completado"><i style="width:'+p.pct+'%"></i></div><p class="small">'+p.d+' de '+p.n+' unidades completas</p></section><div class="units" data-lv="'+L.k+'">';
  inLevel(k).forEach(function(u,i){var st=statusOf(u.id),b=P.u[u.id]&&P.u[u.id].best;h+='<a class="unit" href="#u-'+u.id+'"><span class="num">'+(i+1)+'</span><span class="ut"><b>'+esc(u.t)+'</b><span>'+esc(u.sum)+'</span></span><span class="st '+st[1]+'">'+st[0]+(b!=null?" · "+b+"%":"")+"</span></a>"});
- h+='</div><section class="examcard" data-lv="'+L.k+'"><div><h2>Examen del nivel '+L.n+'</h2><p>Veinte preguntas de todas las unidades, sin ayuda hasta entregar. Recibes una nota de 1,0 a 7,0 (60% de exigencia) y el detalle por unidad.</p>'+(P.ex[k]!=null?'<p class="small">Tu mejor nota: <b>'+fnum(P.ex[k])+"</b></p>":"")+'</div><a class="btn" href="#examen-'+k+'">Rendir el examen</a></section>';
+ h+='</div><section class="gamesband" data-lv="'+L.k+'"><div><h2>Hablar y escuchar</h2><p>Escucha preguntas en inglés y responde con tu voz, o repite frases para mejorar tu pronunciación.</p></div><div class="row" style="margin:0"><a class="btn" href="#hablar-'+k+'-qa">Responder</a><a class="btn alt" href="#hablar-'+k+'-rep">Repetir</a></div></section><section class="examcard" data-lv="'+L.k+'"><div><h2>Examen del nivel '+L.n+'</h2><p>Veinte preguntas de todas las unidades, sin ayuda hasta entregar. Recibes una nota de 1,0 a 7,0 (60% de exigencia) y el detalle por unidad.</p>'+(P.ex[k]!=null?'<p class="small">Tu mejor nota: <b>'+fnum(P.ex[k])+"</b></p>":"")+'</div><a class="btn" href="#examen-'+k+'">Rendir el examen</a></section>';
  root.innerHTML=h;
 }
 
@@ -1224,9 +1234,163 @@ function gEscucha(){
 
 /* ---------- router ---------- */
 function go(h){location.hash=h}
+/* ---------- Hablar y escuchar (listening + speaking) ---------- */
+var SR=window.SpeechRecognition||window.webkitSpeechRecognition||null;
+var curRec=null,MICBAD=false;
+/* [texto que se escucha, pregunta, claves aceptadas ("a|b" alternativas, "x+y" ambas), respuesta modelo, pista en español] */
+var SPK={
+ basico:{qa:[
+  ["Anna wakes up at six. She has breakfast at seven.","What time does Anna wake up?","six|6","She wakes up at six.","Hora en que despierta Anna."],
+  ["Tom goes to school by bus. His sister walks.","How does Tom go to school?","bus","By bus.","Medio de transporte de Tom."],
+  ["I have two brothers and one sister. My sister is a nurse.","What does the sister do?","nurse","She is a nurse.","Profesión de la hermana."],
+  ["The cafe opens at eight and closes at five. It is closed on Sundays.","When is the cafe closed?","sunday","On Sundays.","Día en que está cerrado."],
+  ["Maria likes pizza, but she doesn't like fish.","What food does Maria like?","pizza","Pizza.","Qué comida le gusta."],
+  ["It's Saturday. Pedro is at the park with his dog. The weather is sunny.","Where is Pedro?","park","At the park.","Dónde está Pedro."]],
+  rep:["My name is Carla and I am from Chile.","I usually have breakfast at seven o'clock.","Where is the nearest supermarket?","She doesn't like coffee, but she likes tea.","Yesterday I went to the beach with my family.","Can I have a glass of water, please?"]},
+ intermedio:{qa:[
+  ["Last summer, Laura travelled to Italy for two weeks. She visited Rome and Venice, but she didn't have time to see Florence.","Which city didn't Laura visit?","florence","Florence.","Ciudad que no alcanzó a visitar."],
+  ["I've been learning guitar since March. At first it was difficult, but now I can play five songs.","How many songs can the speaker play?","five|5","Five songs.","Cantidad de canciones."],
+  ["If it rains tomorrow, we'll cancel the picnic and watch a film at home instead.","What will they do if it rains?","film|movie|home|cancel","They will watch a film at home.","Plan alternativo si llueve."],
+  ["The train to Valparaiso leaves at nine fifteen from platform four. You should arrive twenty minutes early.","Which platform does the train leave from?","four|4","Platform four.","Número de andén."],
+  ["My brother used to be shy, but he has become much more confident since he joined the theatre club.","What did he join?","theatre|theater|club","The theatre club.","Qué club."],
+  ["You mustn't use your phone during the exam, but you can use a dictionary.","What can students use?","dictionary","A dictionary.","Qué sí pueden usar."]],
+  rep:["I have lived in this city for more than ten years.","If I had more time, I would learn another language.","You should drink more water and sleep eight hours.","The film was longer than I expected.","She asked me whether I wanted to join them for dinner.","I'm thinking of changing jobs next year."]},
+ avanzado:{qa:[
+  ["Had the company invested earlier in renewable energy, it would now be far less dependent on imported fuel.","What would the company be less dependent on?","fuel|imported","Imported fuel.","De qué dependería menos."],
+  ["Although the report was thorough, critics argued that its conclusions were based on a rather small sample.","What was the criticism of the report?","sample|small","The sample was too small.","La crítica al informe."],
+  ["The committee, which has been meeting weekly since January, is expected to announce its decision by the end of the month.","When is the decision expected?","end of the month|end of month|month","By the end of the month.","Cuándo se espera la decisión."],
+  ["Not only did the new policy reduce costs, but it also improved employee satisfaction.","What else did the policy improve?","satisfaction|employee","Employee satisfaction.","Qué más mejoró."],
+  ["Rarely have I seen such a well-organised conference; every session started exactly on time.","What was special about the sessions?","on time|punctual|exactly","They started exactly on time.","Qué destacó de las sesiones."],
+  ["She would rather work from home on Fridays, provided that her team agrees.","When does she prefer to work from home?","friday","On Fridays.","Qué día prefiere teletrabajar."]],
+  rep:["Despite the heavy traffic, we managed to arrive before the meeting began.","Had I known about the delay, I would have taken another route.","It is essential that every participant submits the form by Monday.","The more I practise, the more confident I become.","Hardly had the lecture started when the projector broke down.","She is said to be one of the most influential architects of her generation."]},
+ experto1:{qa:[
+  ["Were it not for the grant, the research team would have had to abandon the project altogether.","What would have happened without the grant?","abandon|stop|cancel","They would have abandoned the project.","Qué habría pasado sin la subvención."],
+  ["Seldom do politicians admit their mistakes so candidly, which is why the speech attracted so much attention.","Why did the speech attract attention?","candid|admit|mistake","Because the politician admitted mistakes candidly.","Por qué llamó la atención."],
+  ["The author's prose is deceptively simple; beneath its clarity lies a remarkably intricate structure.","How is the author's prose described?","simple|deceptive|clear","Deceptively simple.","Cómo se describe la prosa."],
+  ["He needn't have rushed; the flight had been delayed by nearly three hours.","How long was the delay?","three|3","Nearly three hours.","Cuánto fue el retraso."],
+  ["Should the negotiations fail, the union has threatened to call a nationwide strike.","What has the union threatened to do?","strike","To call a nationwide strike.","Con qué amenaza el sindicato."],
+  ["Insofar as the data allow, the study suggests a modest link between sleep and academic performance.","What does the study suggest?","sleep|link|performance","A modest link between sleep and performance.","Qué sugiere el estudio."]],
+  rep:["Under no circumstances should the door be left unlocked.","No sooner had she sat down than the phone rang.","It's high time we reconsidered our approach to the problem.","The findings, though preliminary, merit further investigation.","He might have been more cautious, had he anticipated the consequences.","Were she to resign, the board would have to appoint a successor."]},
+ experto2:{qa:[
+  ["The minister's remarks were, to put it mildly, ill-advised, and the opposition was quick to capitalise on them.","Who capitalised on the remarks?","opposition","The opposition.","Quién sacó provecho."],
+  ["Having weighed the evidence carefully, the tribunal concluded that the claim, however compelling, lacked legal foundation.","What did the tribunal conclude?","legal|foundation|lacked","The claim lacked legal foundation.","Conclusión del tribunal."],
+  ["Their proposal is a double-edged sword: it promises short-term savings, yet it may undermine long-term growth.","What might the proposal undermine?","growth|long-term|long term","Long-term growth.","Qué podría debilitar."],
+  ["I couldn't agree more with your assessment, though I'd add a word of caution about the timeline.","What does the speaker add?","caution|timeline","A word of caution about the timeline.","Qué agrega el hablante."],
+  ["She took the criticism in her stride and carried on as though nothing had happened.","How did she react to the criticism?","stride|calm|carried on|nothing","She took it in her stride.","Cómo reaccionó."],
+  ["The novel's irony is lost on readers who take every statement at face value.","Who misses the irony?","readers|face value|literal","Readers who take statements at face value.","Quiénes no captan la ironía."]],
+  rep:["Notwithstanding the setbacks, the team remained remarkably resilient.","What she lacks in experience, she more than makes up for in enthusiasm.","It goes without saying that confidentiality is paramount.","The proposal was met with a mixture of scepticism and cautious optimism.","Were it not for your timely intervention, the situation would have deteriorated rapidly.","To what extent can we trust statistics that have been selectively presented?"]}
+};
+function spkProg(k,m){return (P.spk&&P.spk[k]&&P.spk[k][m])||null}
+function spkSave(k,m,pct){if(!P.spk)P.spk={};if(!P.spk[k])P.spk[k]={};var b=P.spk[k][m];if(b==null||pct>b)P.spk[k][m]=pct;save();markDay()}
+function sayCb(t,rate,cb){
+ if(!CAN_SAY){if(cb)cb();return}
+ try{
+  speechSynthesis.cancel();
+  var u=new SpeechSynthesisUtterance(t);u.lang="en-US";u.rate=rate||0.9;
+  var v=speechSynthesis.getVoices().filter(function(x){return /^en[-_]/i.test(x.lang)});
+  if(v.length)u.voice=v.filter(function(x){return /en[-_]US/i.test(x.lang)})[0]||v[0];
+  var d=false,fin=function(){if(!d){d=true;if(cb)cb()}};u.onend=fin;u.onerror=fin;
+  speechSynthesis.speak(u);
+ }catch(e){if(cb)cb()}
+}
+function sayTwo(a,b,cb){sayCb(a,.88,function(){setTimeout(function(){sayCb(b,.9,cb)},500)})}
+function keyHit(txt,keys){
+ var n=" "+norm(txt)+" ";
+ return keys.split("|").some(function(alt){return alt.split("+").every(function(t){var k=norm(t);return n.indexOf(" "+k+" ")>-1||(k.length>=3&&n.indexOf(" "+k)>-1)})});
+}
+function wordsOf(s){return norm(s).split(" ").filter(Boolean)}
+function simScore(exp,heard){
+ var E=wordsOf(exp),H=wordsOf(heard),pool=H.slice(),hit=[];
+ E.forEach(function(w){var i=pool.indexOf(w);if(i>-1){pool.splice(i,1);hit.push(true)}else hit.push(false)});
+ return {E:E,hit:hit,pct:E.length?Math.round(100*hit.filter(Boolean).length/E.length):0};
+}
+function stopRec(){try{if(curRec)curRec.abort()}catch(e){}curRec=null}
+function listenOnce(cb){
+ stopRec();
+ var r=new SR(),fin=false,got=false;curRec=r;
+ r.lang="en-US";r.interimResults=false;r.maxAlternatives=3;r.continuous=false;
+ function done(err,alts){if(fin)return;fin=true;if(curRec===r)curRec=null;cb(err,alts)}
+ r.onresult=function(e){got=true;var a=[];for(var i=0;i<e.results[0].length;i++)a.push(e.results[0][i].transcript);done(null,a)};
+ r.onerror=function(e){done(e.error||"error")};
+ r.onend=function(){done(got?null:"no-speech")};
+ try{r.start()}catch(e){done("error")}
+}
+var MICICON='<svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="M12 15a3 3 0 0 0 3-3V6a3 3 0 0 0-6 0v6a3 3 0 0 0 3 3z" fill="currentColor"/><path d="M6 11v1a6 6 0 0 0 12 0v-1M12 18v3" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>';
+
+function viewSpeakHub(){
+ setNav("hablar");document.title="Hablar y escuchar · Aprendeya Inglés";
+ var h='<section class="lvhead gh"><p class="eyebrow">Listening y speaking</p><h1>Hablar y escuchar</h1><p class="lead">Escucha preguntas en inglés y responde en voz alta. También puedes practicar tu pronunciación repitiendo frases. Hay prácticas por cada nivel.</p>'+
+ (SR?'<p class="small">Tu navegador permite responder con el micrófono. Te pedirá permiso la primera vez.</p>':'<p class="note">Tu navegador no permite reconocimiento de voz (funciona en Chrome, Edge y Safari). Igual puedes escuchar y <b>escribir</b> tus respuestas.</p>')+'</section><div class="levels">';
+ h+=ORDER.map(function(k){var L=LV[k],a=spkProg(k,"qa"),b=spkProg(k,"rep");return '<article class="lvcard" data-lv="'+L.k+'"><p class="cefr">'+L.cefr+'</p><h2>'+L.n+'</h2><p class="small">Escucha y responde: '+(a!=null?"mejor "+a+"%":"sin intentar")+'<br>Escucha y repite: '+(b!=null?"mejor "+b+"%":"sin intentar")+'</p><div class="row"><a class="btn" href="#hablar-'+k+'-qa">Responder</a><a class="btn alt" href="#hablar-'+k+'-rep">Repetir</a></div></article>'}).join("")+"</div>";
+ root.innerHTML=h;
+}
+function viewSpeakLevel(k){location.hash="#hablar-"+k+"-qa"}
+function viewSpeak(k,mode){
+ var L=LV[k],data=SPK[k],items=shuf(mode==="qa"?data.qa:data.rep.map(function(t){return [t]})),i=0,okN=0,sum=0,answered=false,showTxt=false,listening=false;
+ setNav("hablar");document.title=(mode==="qa"?"Escucha y responde":"Escucha y repite")+" · "+L.n;
+ function frame(inner){root.innerHTML='<section class="gplay spk" data-lv="'+L.k+'"><a class="back" href="#hablar">← Hablar y escuchar</a><p class="cefr">'+L.cefr+" · "+L.n+'</p><h1>'+(mode==="qa"?"Escucha y responde":"Escucha y repite")+'</h1>'+inner+'</section>'}
+ function play(slow){var it=items[i];if(mode==="qa")sayTwo(it[0],it[1]);else sayCb(it[0],slow?.65:.88)}
+ function draw(){
+  answered=false;var it=items[i];
+  var tx=mode==="qa"?'<p class="spktx" id="tx" '+(showTxt||!CAN_SAY?"":"hidden")+'><b>Texto:</b> '+esc(it[0])+'<br><b>Pregunta:</b> '+esc(it[1])+'</p>':'<p class="spktx" id="tx" '+(showTxt||!CAN_SAY?"":"hidden")+'>'+esc(it[0])+'</p>';
+  var h='<div class="prac"><div class="pbar"><span>'+(mode==="qa"?"Pregunta ":"Frase ")+(i+1)+" de "+items.length+'</span><div class="meter"><i style="width:'+Math.round(100*i/items.length)+'%"></i></div></div><div class="q">'+
+  '<p class="qt">'+(mode==="qa"?"Escucha el audio y responde la pregunta en inglés.":"Escucha la frase y repítela en voz alta.")+'</p>'+
+  '<div class="row" style="margin:0"><button type="button" class="btn" id="pl">'+ICON+' Escuchar</button>'+(mode==="rep"?'<button type="button" class="btn alt" id="plslow">Más lento</button>':'<button type="button" class="btn alt" id="plag">Otra vez</button>')+'<button type="button" class="btn alt" id="tg">Ver / ocultar texto</button></div>'+tx+
+  (SR&&!MICBAD?'<div class="row" style="margin:0"><button type="button" class="btn mic" id="mic">'+MICICON+' Responder hablando</button></div>':'')+
+  '<div id="st" class="small" role="status" aria-live="polite">'+(SR&&!MICBAD?"Pulsa el micrófono, espera y habla en inglés.":"Escribe tu respuesta abajo.")+'</div>'+
+  '<form id="tf" class="spkform"><label class="small" for="ti">'+(SR&&!MICBAD?"¿Sin micrófono? Escribe tu respuesta":"Tu respuesta")+'</label><div class="row" style="margin:0"><input id="ti" autocomplete="off" lang="en" placeholder="Type here in English"><button type="submit" class="btn alt">Comprobar</button></div></form>'+
+  '<div id="fb" role="status" aria-live="polite"></div></div></div>';
+  frame(h);
+  $("#pl").addEventListener("click",function(){play(false)});
+  var sl=$("#plslow");if(sl)sl.addEventListener("click",function(){play(true)});
+  var ag=$("#plag");if(ag)ag.addEventListener("click",function(){play(false)});
+  $("#tg").addEventListener("click",function(){showTxt=!showTxt;var t=$("#tx");if(showTxt)t.removeAttribute("hidden");else t.setAttribute("hidden","")});
+  $("#tf").addEventListener("submit",function(e){e.preventDefault();var v=$("#ti").value.trim();if(v)judge([v],"typed")});
+  var mb=$("#mic");if(mb)mb.addEventListener("click",function(){
+   if(answered||listening)return;
+   try{speechSynthesis.cancel()}catch(e){}
+   listening=true;mb.classList.add("on");$("#st").textContent="Escuchando… habla ahora.";
+   listenOnce(function(err,alts){
+    listening=false;var m=$("#mic");if(m)m.classList.remove("on");var st=$("#st");if(!st)return;
+    if(err==="not-allowed"||err==="service-not-allowed"){MICBAD=true;st.textContent="El navegador no dio permiso al micrófono en esta página. Escribe tu respuesta en el cuadro de abajo.";if(m)m.disabled=true;return}
+    if(err==="no-speech"||err==="aborted"){st.textContent="No te escuché. Acércate al micrófono y vuelve a intentarlo.";return}
+    if(err){st.textContent="No pude reconocer la voz ("+err+"). Intenta de nuevo o escribe tu respuesta.";return}
+    judge(alts,"voice");
+   });
+  });
+  setTimeout(function(){play(false)},350);
+ }
+ function judge(alts,via){
+  if(answered)return;answered=true;stopRec();var it=items[i],ok,pct,html;
+  var heard=alts[0];
+  if(mode==="qa"){
+   ok=alts.some(function(a){return keyHit(a,it[2])});pct=ok?100:0;
+   html='<div class="fb '+(ok?"good":"bad")+'"><b>'+(ok?"¡Muy bien!":"Casi. Inténtalo con la respuesta modelo.")+'</b><br>'+(via==="voice"?"Entendí: «"+esc(heard)+"».":"Escribiste: «"+esc(heard)+"».")+'<br>Respuesta modelo: <span lang="en"><b>'+esc(it[3])+'</b></span><br><span class="why">Pista: '+esc(it[4])+'</span><br><span class="why">Texto: <span lang="en">'+esc(it[0])+" "+esc(it[1])+'</span></span></div>';
+  }else{
+   var best=alts.map(function(a){return simScore(it[0],a)}).sort(function(a,b){return b.pct-a.pct})[0];
+   pct=best.pct;ok=pct>=70;
+   html='<div class="fb '+(ok?"good":"bad")+'"><b>'+(ok?"¡Buena pronunciación! ":"Sigue practicando. ")+pct+'% de las palabras</b><p class="wordsrow" lang="en">'+best.E.map(function(w,j){return '<span class="'+(best.hit[j]?"wh":"wm")+'">'+esc(w)+"</span>"}).join(" ")+'</p><span class="why">Entendí: «'+esc(heard)+'». En verde las palabras que reconocí; en rojo las que faltaron o sonaron distinto.</span></div>';
+  }
+  if(ok)okN++;sum+=pct;
+  $("#fb").innerHTML=html+'<div class="row"><button type="button" class="btn" id="nx">'+(i<items.length-1?"Siguiente":"Ver resultado")+'</button><button type="button" class="btn alt" id="rt">Intentar de nuevo</button></div>';
+  var mb=$("#mic");if(mb)mb.disabled=true;
+  $("#nx").addEventListener("click",function(){if(i<items.length-1){i++;draw()}else end()});
+  $("#rt").addEventListener("click",function(){if(ok){okN--}sum-=pct;answered=false;$("#fb").innerHTML="";$("#st").textContent="Inténtalo otra vez.";if(mb)mb.disabled=false;$("#ti").value=""});
+  $("#nx").focus();
+ }
+ function end(){
+  var pct=Math.round(sum/items.length);spkSave(k,mode,pct);
+  var other=mode==="qa"?"rep":"qa";
+  frame('<div class="result"><p class="eyebrow">Resultado</p><div class="score sm">'+okN+' de '+items.length+'</div><p class="lead">'+(mode==="qa"?"Respuestas correctas: "+okN+". ":"Pronunciación promedio: "+pct+"%. ")+(okN>=items.length-1?"¡Excelente oído!":okN>=Math.ceil(items.length/2)?"Vas muy bien. Repite para afianzar.":"Escucha cada audio con calma, activa el texto si lo necesitas y vuelve a intentarlo.")+'</p><div class="row"><a class="btn" href="#hablar-'+k+'-'+mode+'" id="again">Practicar otra vez</a><a class="btn alt" href="#hablar-'+k+'-'+other+'">'+(other==="qa"?"Ir a escuchar y responder":"Ir a escuchar y repetir")+'</a><a class="btn alt" href="#hablar">Otros niveles</a></div></div>');
+  var a=$("#again");if(a)a.addEventListener("click",function(e){e.preventDefault();viewSpeak(k,mode)});
+ }
+ draw();
+}
+
 function route(){
  var h=(location.hash||"#inicio").slice(1),m;
  try{if(CAN_SAY)speechSynthesis.cancel()}catch(e){}
+ stopRec();
  clearTimers();
  window.scrollTo(0,0);
  if(h==="inicio"||h==="")viewHome();
@@ -1241,6 +1405,9 @@ function route(){
  else if(h==="juego-ahorcado")gAhorcado();
  else if(h==="juego-letras")gLetras();
  else if(h==="juego-escucha"&&CAN_SAY)gEscucha();
+ else if(h==="hablar")viewSpeakHub();
+ else if((m=/^hablar-([a-z0-9]+)-(qa|rep)$/.exec(h))&&SPK[m[1]])viewSpeak(m[1],m[2]);
+ else if((m=/^hablar-([a-z0-9]+)$/.exec(h))&&SPK[m[1]])viewSpeakLevel(m[1]);
  else viewHome();
 }
 document.addEventListener("click",function(e){var b=e.target.closest("[data-say]");if(b){e.preventDefault();say(b.getAttribute("data-say"))}});
